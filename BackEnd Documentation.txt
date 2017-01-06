@@ -26,4 +26,15 @@ public void writeHeuristicVal(String a) - writes in new heurestic info, function
 public double[] getHeuresticVal() - gets the heurestic info
 public String getHeuresticString() - get heurestic string for function type
 
+DataHandler:
+Description: Is called if weekComplete from DataParser returns true
+Only one public String
+Job: Takes in Days[] d, double[] heuresticVals, String heuresticString, and returns new Days[] d, double[] heuresticVals, String heurestic String
+
+Days Class
+no methods, basically a struct
+Length(double), Time(int), Effort(int), Completed(boolean)
+
+Server
+
 
