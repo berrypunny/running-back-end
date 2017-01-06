@@ -1,0 +1,29 @@
+BackEnd Documentation:
+
+Server is composed of three things, Data, DataParser, and DataHandler
+Data:
+Two .txt files, one is the weekly progress, and the other is the heurestic constants obtained from machine learning
+Progress.txt format
+First Line - Number of days currently completed 
+Every other line after that - Run Length, Run Time, Effort, and Completion(True or False)
+Heurestics:
+Constants
+
+DataParser:
+Is a Java Object created whenever server boots up
+Initializes with a Scanner:
+Tasks
+- Reads and writes to the two Data files
+- Sends data, and takes processesed data from Handler
+
+Methods:
+
+public boolean weekComplete() - returns true if week is complete, false otherwise
+public Days[] getProgress() - returns weekly progress bar from Progress.txt
+public void writeWeek(Days[] d) - writes day info into text file
+public void writeHeuristicVal(double[] d) - writes in new heurestic info
+public void writeHeuristicVal(String a) - writes in new heurestic info, function type for EV curve
+public double[] getHeuresticVal() - gets the heurestic info
+public String getHeuresticString() - get heurestic string for function type
+
+
