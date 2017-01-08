@@ -37,8 +37,8 @@ public class DataParser {
 	/*
 	 *returns weekly progress bar from Progress.txt or is it .json? 
 	 */
-	public Days[] getProgress(){
-		Days[] dayArray = new Days[WEEK]; 
+	public Day[] getProgress(){
+		Day[] dayArray = new Day[WEEK]; 
 		int index = 0; 
 		File file = new File("progress.txt"); 
 		try {
@@ -65,7 +65,7 @@ public class DataParser {
 	/*
 	 * writes day info into text file
 	 */ 
-	public void writeWeek(Days[] d){
+	public void writeWeek(Day[] d){
 		File outFile = new File("progress.txt")
 		FileWriter fWriter = new FileWriter(outFile); 
 		PrintWriter pWriter = new PrintWriter(fWriter); 
