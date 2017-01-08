@@ -69,7 +69,7 @@ public class DataParser {
 		File outFile = new File("progress.txt")
 		FileWriter fWriter = new FileWriter(outFile); 
 		PrintWriter pWriter = new PrintWriter(fWriter); 
-		for(int i = 0; i < d.size; i++){
+		for(int i = 0; i < d.length; i++){
 			pWriter.println(d[i].toString()); 	//will d have a toString method
 		}
 		pWriter.close(); 
@@ -81,7 +81,7 @@ public class DataParser {
 		File outFile = new File("heuristic.txt")
 		FileWriter fWriter = new FileWriter(outFile); 
 		PrintWriter pWriter = new PrintWriter(fWriter); 
-		for(int i = 0; i < d.size; i++){
+		for(int i = 0; i < d.length; i++){
 			pWriter.println(d[i].toString()); 	
 		}
 		pWriter.close(); 
