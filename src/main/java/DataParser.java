@@ -50,7 +50,7 @@ public class DataParser {
             	Scanner finder = new Scanner(i);
             	dayArray[index].length = finder.nextDouble();
             	dayArray[index].time = finder.nextInt(); 
-            	dayArray[index].effort = finder.nextInt();  
+            	dayArray[index].heartrate = finder.nextInt();  
             	index++; 
         	}
         	sc.close();
