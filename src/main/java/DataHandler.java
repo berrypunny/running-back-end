@@ -11,7 +11,7 @@ public class DataHandler {
         distribution = d;
     }
     //assumptions made: restdays start at end of the week
-    private Function findEffortCurve(Day[] days, int startF, int endF, int recoveryF, double[] runnerCurve, int minrate, int maxrate) {
+    public Function findEffortCurve(Day[] days, int startF, int endF, int recoveryF, double[] runnerCurve, int minrate, int maxrate) {
         ExponentialFunction runner = new ExponentialFunction(runnerCurve[0], runnerCurve[1]); //runner as characterized by curve
 
         //find where rest days start
@@ -19,10 +19,13 @@ public class DataHandler {
         while (days[index].length != 0) {
             index ++;
         }
+        //instantiate arrays that hold info for non-rest days
         int[] heartrates = new int[index];
         double[] lengths = new double[index];
         double[] pace = new double[index];
         double[] racePace = new double[index];
+
+        //populate information
         for (int i = 0; i < index; i++) {
             heartrates[i] = days[i].heartrate;
             lengths[i] = days[i].length;
@@ -30,7 +33,11 @@ public class DataHandler {
             racePace[i] = runner.output(lengths[i]);
 
         }
+
+        //normalize effort from heartrate
         double[] effort = normalizeEffort(heartrates, minrate, maxrate);
+        //find the two rest constants, that will be used for calculating Accumulated Fatigue(AF)
+        //AF helps plot Effort vs Speedup Curve
         double[] rConstants = recoveryConstants(7 - index, startF, endF, recoveryF, effort, lengths);
 
         double[] fatigue = new double[index];
@@ -38,11 +45,16 @@ public class DataHandler {
         for (int j = 1; j < index; j++) {
             fatigue[j] = fatigue[j - 1] - rConstants[0] + effort[j]*lengths[j] * rConstants[1];
         }
+
         double[] speedup = calculateSpeedup(racePace, pace, fatigue);
+
+        //best fit effort curve to either a linear, logarithmic, or exponential function
         Function[] curves = effortCurves(effort, speedup);
         return bestFit(curves, effort, speedup);
 
     }
+
+    //find recovery constants that will be used to linearly interpolate accumulated fatigue for non-rest days in the week
     private double[] recoveryConstants(int restDays, int startF, int endF, int recoveryF, double[] effort, double[] miles) {
         int delta = endF - startF;
         double rConst = (double) (endF - recoveryF) / restDays;
@@ -59,6 +71,7 @@ public class DataHandler {
 
     }
 
+    //creates an "effort" array from heartrate, normalized so effort is from 0-1
     private double[] normalizeEffort(int[] heartrates, int minrate, int maxrate) {
         double[] effort = new double[heartrates.length];
         for(int i = 0; i < heartrates.length; i++) {
@@ -67,6 +80,7 @@ public class DataHandler {
         return effort;
     }
 
+    //calculate speedup factoring in accumulated fatigue
     private double[] calculateSpeedup(double[] race, double[] actual, double[] fatigue) {
         double[] speedup = new double[actual.length];
         for (int i = 0; i < speedup.length; i++) {
@@ -156,6 +170,7 @@ public class DataHandler {
         return new LogarithmicFunction(a, b);
     }
 
+    //runs linear regression for y = ax + b, finds best a and b
     private double[] regression(double[] x, double[] y) {
         if (x.length != y.length) {
             throw new IllegalArgumentException("input output do not have matching lengths");
