@@ -17,8 +17,8 @@ public class DataParser {
         	Scanner sc = new Scanner(file);
 
         	while (sc.hasNextLine()) {
-            	string i = sc.nextLine();
-            	System.out.println(i); //just to count
+            	String i = sc.nextLine();
+            	System.out.println(counter); //just to count
             	counter++; 
         	}
         	sc.close();
@@ -46,7 +46,7 @@ public class DataParser {
         	Scanner sc = new Scanner(file);
 
         	while (sc.hasNextLine()) {
-            	string i = sc.nextLine();
+            	String i = sc.nextLine();
             	Scanner finder = new Scanner(i);
             	dayArray[index].length = finder.nextDouble();
             	dayArray[index].time = finder.nextInt(); 
@@ -66,8 +66,17 @@ public class DataParser {
 	 * writes day info into text file
 	 */ 
 	public void writeWeek(Day[] d){
-		File outFile = new File("progress.txt")
-		FileWriter fWriter = new FileWriter(outFile); 
+		File outFile = new File("progress.txt");
+		FileWriter fWriter;
+
+		try{
+			 fWriter = new FileWriter(outFile);
+		} catch (Exception e) {
+			fWriter = null;
+		}
+		if (fWriter == null) {
+			throw new RuntimeException("writer not instantiated");
+		}
 		PrintWriter pWriter = new PrintWriter(fWriter); 
 		for(int i = 0; i < d.length; i++){
 			pWriter.println(d[i].toString()); 	//will d have a toString method
@@ -78,11 +87,19 @@ public class DataParser {
 	 * writes in new heuristic info to txt file 
 	 */ 
 	public void writeHeuristicVal(double[] d){
-		File outFile = new File("heuristic.txt")
-		FileWriter fWriter = new FileWriter(outFile); 
+		File outFile = new File("heuristic.txt");
+		FileWriter fWriter;
+		try {
+			fWriter = new FileWriter(outFile);
+		} catch (Exception e) {
+			fWriter = null;
+		}
+		if (fWriter == null) {
+			throw new RuntimeException("Writer not instantiated");
+		}
 		PrintWriter pWriter = new PrintWriter(fWriter); 
 		for(int i = 0; i < d.length; i++){
-			pWriter.println(d[i].toString()); 	
+			pWriter.println(d[i]);
 		}
 		pWriter.close(); 
 	}
@@ -90,9 +107,24 @@ public class DataParser {
 	 * writes in new heurestic info, function type for EV curve
 	 */
 	public void writeHeuristicVal(String a){
-		File outFile = new File("heuristic.txt")
-		FileWriter fWriter = new FileWriter(outFile); 
-		PrintWriter pWriter = new PrintWriter(fWriter); 
+		File outFile = new File("heuristic.txt");
+		FileWriter fWriter;
+		try {
+			fWriter = new FileWriter(outFile);
+		} catch (Exception e) {
+			fWriter = null;
+		}
+		if (fWriter == null) {
+			throw new RuntimeException("writer not instantiated");
+		}
+		PrintWriter pWriter;
+		try {
+			pWriter = new PrintWriter(fWriter);
+		}
+		catch (Exception e) {
+			pWriter = null;
+		}
+		if (pWriter == null) throw new RuntimeException("printwriter not instantiated");
 		
 		pWriter.println(a); 	
 		
@@ -120,12 +152,13 @@ public class DataParser {
     	catch (FileNotFoundException e) {
        	 	e.printStackTrace();
     	}
-    	return dayArray; 
+    	return hArray;
 	} 
 	/*
 	 * get heurestic string for function type
 	 */ 
 	public String getHeuresticString(){
+	    return "ayy lamar";
 
 	}
 

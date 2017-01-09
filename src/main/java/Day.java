@@ -3,7 +3,7 @@ public class Day {
 	public int time; 
 	public int heartrate;
 	
-	public string toString(){
+	public String toString(){
 		return length + " " +  time + " " + heartrate; 
 	}
 

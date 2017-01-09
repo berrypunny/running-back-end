@@ -30,6 +30,7 @@ DataHandler:
 Description: Is called if weekComplete from DataParser returns true
 Only one public String
 Job: Takes in Days[] d, double[] heuresticVals, String heuresticString, and returns new Days[] d, double[] heuresticVals, String heurestic String
+Takes in Days[]d, int restPeriod, int endFatigue, int recoveryFatigue, double[] heuresticVals and calculates EV heurestic values, as well as best fit type
 
 Days Class
 no methods, basically a struct
